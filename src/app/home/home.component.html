@@ -1,0 +1,17 @@
+<div class="container">
+  @if (!isInterviewMode) {
+    <div class="home-content">
+      <h1>Interview Simulator</h1>
+      <p>Click the button below to start your interview simulation</p>
+      <button [disabled]="isButtonDisabled" (click)="startInterview()" class="interview-button">
+        Take Interview
+      </button>
+    </div>
+  } @else {
+    <div class="interview-mode">
+      <h2>Interview in Progress</h2>
+      <div class="countdown">Time Remaining: {{ countdown }} seconds</div>
+      <!-- Interview content will go here -->
+    </div>
+  }
+</div>

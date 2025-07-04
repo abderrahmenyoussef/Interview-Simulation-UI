@@ -4,112 +4,294 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b6b 0%, #ffa726 100%);
   font-family: 'Arial', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated background elements */
+.success-container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: backgroundMove 20s linear infinite;
+}
+
+@keyframes backgroundMove {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(-50px, -50px) rotate(360deg); }
+}
+
+/* Floating particles */
+.success-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.2) 2px, transparent 2px),
+    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15) 1.5px, transparent 1.5px);
+  background-size: 100px 100px, 150px 150px, 200px 200px;
+  animation: particleFloat 15s ease-in-out infinite;
+}
+
+@keyframes particleFloat {
+  0%, 100% { opacity: 0.7; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-20px); }
 }
 
 .success-card {
-  background: white;
-  border-radius: 20px;
-  padding: 40px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  border-radius: 25px;
+  padding: 50px 40px;
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  max-width: 550px;
   width: 90%;
-  animation: slideIn 0.6s ease-out;
+  position: relative;
+  z-index: 1;
+  animation: successEnter 1s ease-out;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-@keyframes slideIn {
-  from {
-    transform: translateY(-50px);
+@keyframes successEnter {
+  0% {
+    transform: scale(0.8) translateY(50px);
     opacity: 0;
   }
-  to {
-    transform: translateY(0);
+  60% {
+    transform: scale(1.05) translateY(-10px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1) translateY(0);
     opacity: 1;
   }
 }
 
 .success-icon {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   display: flex;
   justify-content: center;
-  animation: checkmark 0.8s ease-in-out 0.3s both;
+  position: relative;
 }
 
-@keyframes checkmark {
+.success-icon svg {
+  animation:
+    checkmarkDraw 1.2s ease-in-out 0.5s both,
+    checkmarkBounce 0.6s ease-out 1.7s both;
+  filter: drop-shadow(0 5px 15px rgba(76, 175, 80, 0.3));
+}
+
+@keyframes checkmarkDraw {
   0% {
+    stroke-dasharray: 0 100;
     transform: scale(0);
   }
   50% {
-    transform: scale(1.2);
+    stroke-dasharray: 50 100;
+    transform: scale(1.1);
   }
   100% {
+    stroke-dasharray: 100 100;
     transform: scale(1);
   }
 }
 
+@keyframes checkmarkBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+/* Celebration particles around checkmark */
+.success-icon::before {
+  content: '✨';
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  font-size: 1.5rem;
+  animation: sparkle 2s ease-in-out 2s infinite;
+}
+
+.success-icon::after {
+  content: '🎉';
+  position: absolute;
+  bottom: -5px;
+  left: 5px;
+  font-size: 1.2rem;
+  animation: sparkle 2s ease-in-out 2.5s infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0.7; transform: scale(1) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+}
+
 h1 {
-  color: #333;
-  font-size: 2.5rem;
-  margin-bottom: 15px;
-  font-weight: bold;
+  color: #2c3e50;
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: titleGlow 2s ease-in-out 1s both;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes titleGlow {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .success-message {
-  color: #666;
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-  line-height: 1.6;
+  color: #34495e;
+  font-size: 1.3rem;
+  margin-bottom: 35px;
+  line-height: 1.7;
+  animation: messageSlide 0.8s ease-out 1.3s both;
+  font-weight: 500;
+}
+
+@keyframes messageSlide {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 .success-details {
-  background: #f8f9fa;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 30px;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(69, 160, 73, 0.05));
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 35px;
   text-align: left;
+  border: 1px solid rgba(76, 175, 80, 0.2);
+  animation: detailsReveal 0.6s ease-out 1.8s both;
+}
+
+@keyframes detailsReveal {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 .success-details p {
-  margin: 8px 0;
+  margin: 12px 0;
   color: #4CAF50;
-  font-weight: 500;
+  font-weight: 600;
   display: flex;
   align-items: center;
+  font-size: 1.05rem;
+  animation: checkItemSlide 0.4s ease-out both;
+}
+
+.success-details p:nth-child(1) { animation-delay: 2s; }
+.success-details p:nth-child(2) { animation-delay: 2.2s; }
+.success-details p:nth-child(3) { animation-delay: 2.4s; }
+
+@keyframes checkItemSlide {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.success-details p::before {
+  content: '✓';
+  margin-right: 10px;
+  background: #4CAF50;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+  animation: checkPop 0.3s ease-out both;
+}
+
+@keyframes checkPop {
+  0% { transform: scale(0); }
+  70% { transform: scale(1.2); }
+  100% { transform: scale(1); }
 }
 
 .reset-button {
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
   border: none;
-  padding: 15px 30px;
-  font-size: 1.1rem;
-  border-radius: 25px;
+  padding: 18px 40px;
+  font-size: 1.15rem;
+  border-radius: 50px;
   cursor: pointer;
+  font-weight: 700;
+  position: relative;
+  overflow: hidden;
   transition: all 0.3s ease;
-  font-weight: bold;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  animation: buttonAppear 0.5s ease-out 2.6s both;
+}
+
+@keyframes buttonAppear {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reset-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.reset-button:hover::before {
+  left: 100%;
 }
 
 .reset-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(135deg, #5a67d8, #6b46c1);
 }
 
 .reset-button:active {
-  transform: translateY(0);
+  transform: translateY(-1px) scale(1.02);
+  transition: all 0.1s ease;
+}
+
+/* Hover effect for the entire card */
+.success-card:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 35px 60px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
   .success-card {
-    padding: 30px 20px;
+    padding: 40px 25px;
     margin: 20px;
   }
 
   h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
 
   .success-message {
@@ -117,6 +299,11 @@ h1 {
   }
 
   .success-details {
-    padding: 15px;
+    padding: 20px;
+  }
+
+  .reset-button {
+    padding: 15px 30px;
+    font-size: 1rem;
   }
 }

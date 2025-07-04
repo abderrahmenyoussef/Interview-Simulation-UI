@@ -3,57 +3,203 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  text-align: center;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ffa726 100%);
+  position: relative;
+  overflow: hidden;
 }
 
-.home-content, .interview-mode {
-  max-width: 600px;
-  padding: 20px;
+/* Animated background particles */
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(255, 167, 38, 0.2) 0%, transparent 50%);
+  animation: float 15s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-20px) rotate(1deg); }
+  66% { transform: translateY(10px) rotate(-1deg); }
+}
+
+.home-content {
+  max-width: 500px;
+  padding: 50px 40px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  animation: slideInUp 0.8s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 h1 {
-  margin-bottom: 20px;
-  color: #333;
+  margin-bottom: 30px;
+  color: #2c3e50;
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #e74c3c, #f39c12);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: textGlow 2s ease-in-out infinite alternate;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes textGlow {
+  from { filter: brightness(1); }
+  to { filter: brightness(1.1) contrast(1.1); }
+}
+
+.home-content p {
+  color: #34495e;
+  font-size: 1.1rem;
+  margin-bottom: 40px;
+  line-height: 1.6;
+  animation: fadeIn 1s ease-out 0.3s both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .interview-button {
-  padding: 12px 24px;
-  font-size: 18px;
-  background-color: #4285f4;
+  padding: 16px 40px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #e74c3c, #f39c12);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 50px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
+  animation: buttonPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes buttonPulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.02); }
+}
+
+.interview-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.interview-button:hover::before {
+  left: 100%;
 }
 
 .interview-button:hover:not([disabled]) {
-  background-color: #3367d6;
-  transform: scale(1.05);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 15px 35px rgba(231, 76, 60, 0.4);
+  background: linear-gradient(135deg, #c0392b, #e67e22);
+}
+
+.interview-button:active:not([disabled]) {
+  transform: translateY(-1px) scale(1.02);
+  transition: all 0.1s ease;
 }
 
 .interview-button:disabled {
-  background-color: #cccccc;
+  background: linear-gradient(135deg, #a0aec0, #cbd5e0);
   cursor: not-allowed;
   opacity: 0.7;
+  transform: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  animation: none;
 }
 
-.countdown {
-  font-size: 24px;
-  font-weight: bold;
-  margin: 20px 0;
-  color: #e53935;
-}
-
-.interview-mode {
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.interview-button:disabled::before {
+  display: none;
 }
 
 .disabled-message {
-  color: #666;
+  color: #e53e3e;
   font-style: italic;
-  margin-top: 15px;
-  font-size: 14px;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  padding: 10px 20px;
+  background: rgba(254, 178, 178, 0.2);
+  border-radius: 25px;
+  border: 1px solid rgba(254, 178, 178, 0.3);
+  animation: fadeIn 0.5s ease-out 0.5s both;
+}
+
+/* Loading animation for button text */
+.interview-button.loading {
+  pointer-events: none;
+}
+
+.interview-button.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid transparent;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .home-content {
+    margin: 20px;
+    padding: 30px 25px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .interview-button {
+    padding: 14px 30px;
+    font-size: 1rem;
+  }
+}
+
+/* Hover effect for the entire card */
+.home-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 35px 60px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
 }

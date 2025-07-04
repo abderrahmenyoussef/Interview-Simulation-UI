@@ -1,0 +1,33 @@
+{
+  "status": "SUCCESS",
+  "error": null,
+  "data": {
+    "messages": "NO_MESSAGE",
+    "questions": [
+      {
+        "id": 1,
+        "question": "Can you explain the difference between Observable and Promise in Angular?"
+      },
+      {
+        "id": 2,
+        "question": "What are Angular lifecycle hooks, and how have you used them?"
+      },
+      {
+        "id": 3,
+        "question": "Describe how you would implement route guards to protect specific pages."
+      },
+      {
+        "id": 4,
+        "question": "How do you manage state in an Angular application?"
+      },
+      {
+        "id": 5,
+        "question": "What is lazy loading in Angular and why is it useful?"
+      },
+      {
+        "id": 6,
+        "question": "How would you handle form validation in Angular for both template-driven and reactive forms?"
+      }
+    ]
+  }
+}

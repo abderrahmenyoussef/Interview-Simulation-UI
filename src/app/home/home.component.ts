@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { InterviewService, InterviewState } from '../services/interview.service';
 
 @Component({
   selector: 'app-home',
@@ -14,32 +16,37 @@ export class HomeComponent implements OnInit {
   isInterviewMode = false;
   countdownInterval: any;
 
+  constructor(
+    private interviewService: InterviewService,
+    private router: Router
+  ) {}
+
   ngOnInit(): void {
-    // Check localStorage to see if the button should be disabled
-    const buttonState = localStorage.getItem('interviewButtonDisabled');
-    if (buttonState === 'true') {
-      this.isButtonDisabled = true;
+    // Check if interview is completed - redirect to success
+    const interviewState = this.interviewService.getInterviewState();
+    if (interviewState === InterviewState.COMPLETED) {
+      this.router.navigate(['/success']);
+      return;
     }
-  }
 
-  startInterview(): void {
-    // Disable the button
+    // Check localStorage to see if the button should be disabled
+    this.isButtonDisabled = this.interviewService.isButtonDisabled();
+  }  startInterview(): void {
+    console.log('Starting interview...');
+
+    // Disable the button and save state
     this.isButtonDisabled = true;
-    // Save state to localStorage
     localStorage.setItem('interviewButtonDisabled', 'true');
-    // Enter interview mode
-    this.isInterviewMode = true;
-    // Start countdown
-    this.startCountdown();
-  }
 
-  startCountdown(): void {
-    this.countdownInterval = setInterval(() => {
-      this.countdown--;
-      if (this.countdown <= 0) {
-        clearInterval(this.countdownInterval);
-        // You can add actions to take when countdown reaches zero
-      }
-    }, 1000);
+    // Set interview state to in progress
+    this.interviewService.setInterviewState(InterviewState.IN_PROGRESS);
+    console.log('Interview state set to:', this.interviewService.getInterviewState());
+
+    // Navigate to interview mode
+    this.router.navigate(['/interview']).then((success) => {
+      console.log('Navigation success:', success);
+    }).catch((error) => {
+      console.error('Navigation error:', error);
+    });
   }
 }

@@ -1,0 +1,107 @@
+.interview-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: background-color 0.5s ease-in-out;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.question-phase {
+  background-color: white;
+  color: #333;
+}
+
+.thinking-phase {
+  background-color: #2196f3;
+  color: white;
+}
+
+.countdown-timer {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 25px;
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.progress-indicator {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 25px;
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.question-content, .thinking-content {
+  text-align: center;
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+.question-content h2, .thinking-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+.thinking-content p {
+  font-size: 1.5rem;
+  margin-top: 20px;
+  opacity: 0.9;
+}
+
+.phase-indicator {
+  position: absolute;
+  bottom: 30px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 25px;
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .question-content h2, .thinking-content h2 {
+    font-size: 2rem;
+  }
+
+  .countdown-timer, .progress-indicator {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .phase-indicator {
+    font-size: 1rem;
+  }
+}
+
+/* Fullscreen styles */
+:fullscreen .interview-container {
+  height: 100vh;
+  width: 100vw;
+}
+
+:-webkit-full-screen .interview-container {
+  height: 100vh;
+  width: 100vw;
+}
+
+:-moz-full-screen .interview-container {
+  height: 100vh;
+  width: 100vw;
+}
